@@ -8,6 +8,10 @@ body {
     text-align: center;
 }
 
+.home {
+  margin-bottom: 100px;
+}
+
 .secret-text {
   text-align: center;
   font-size: 2rem;
