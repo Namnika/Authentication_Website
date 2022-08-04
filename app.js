@@ -32,16 +32,16 @@ app.use(passport.session());
 
 mongoose.connect("mongodb+srv://admin-namnika:test123@cluster0.9ptqm53.mongodb.net/userDB");
 
-app.get("/", function(req, res){
+app.get("/home", function(req, res){
   res.render("home");
 });
 
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
-  googleId: String,
-  facebookId: String,
-  githubId: String,
+  googleID: String,
+  facebookID: String,
+  githubID: String,
   secret: String
 });
 
@@ -72,7 +72,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
-    User.findOrCreate({ googleId: profile.id },
+    User.findOrCreate({ googleID: profile.id },
       function (err, user) {
       return cb(err, user);
     });
@@ -88,7 +88,7 @@ passport.use(new FacebookStrategy({
     enableProof:  true
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id },
+    User.findOrCreate({ facebookID: profile.id },
       function (err, user) {
       return cb(err, user);
     });
@@ -105,7 +105,7 @@ passport.use(new GitHubStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
-    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    User.findOrCreate({ githubID: profile.id }, function (err, user) {
       return cb(err, user);
     });
   }
