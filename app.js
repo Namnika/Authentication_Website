@@ -32,7 +32,7 @@ app.use(passport.session());
 
 mongoose.connect("mongodb+srv://admin-namnika:test123@cluster0.9ptqm53.mongodb.net/userDB");
 
-app.get("/home", function(req, res){
+app.get("/", function(req, res){
   res.render("home");
 });
 
