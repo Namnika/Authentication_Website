@@ -51,12 +51,12 @@ const User = new mongoose.model("User", userSchema);
 
 // -----USING PASSPORT TO CREATE LOCAL LOGIN----
 passport.use(User.createStrategy());
-// passport.serializeUser(function(user, done){
-//   done(null, user);
-// });
-// passport.deserializeUser(function(user, done){
-//   done(null, user);
-// });
+passport.serializeUser(function(user, done){
+  done(null, user);
+});
+passport.deserializeUser(function(user, done){
+  done(null, user);
+});
 
 
 
@@ -116,7 +116,7 @@ app.get("/", function(req, res){
 
 // -----GOOGLE AUTHENTICATION-----
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ["profile", "email"] })
+  passport.authenticate('google', { scope: ["profile"] })
 );
 
 app.get("/auth/google/secrets",
