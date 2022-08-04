@@ -71,7 +71,6 @@ passport.use(new GoogleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log(profile);
     User.findOrCreate({ googleID: profile.id },
       function (err, user) {
       return cb(err, user);
@@ -142,11 +141,10 @@ app.get('/auth/facebook/secrets',
 
 
 // -----GITHUB AUTHENTICATION-----
-app.get('/auth/github',
-  passport.authenticate('github'));
+app.get('/auth/github', passport.authenticate('github'));
 
-app.get('/auth/github/secrets',
-  passport.authenticate('github', { failureRedirect: '/login' }),
+app.get('/auth/github/secrets', passport.authenticate('github',
+{ failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect secrets.
     res.redirect('/secrets');
@@ -163,7 +161,7 @@ app.get("/secrets", function(req, res){
      console.log(err);
    }else{
      if (foundUser){
-       res.render("secrets", {userWithSecrets: foundUser})
+       res.render("secrets", {userWithSecrets: foundUser});
      }
    }
  });
