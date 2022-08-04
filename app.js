@@ -84,7 +84,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: "http://localhost:3000/auth/facebook/secrets",
-    profileFields: ['id', 'email', 'first_name', 'last_name']
+
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ facebookID: profile.id },
