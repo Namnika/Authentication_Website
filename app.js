@@ -246,10 +246,6 @@ app.get("/logout", function(req, res){
 });
 
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 8.8.8.8;
-}
-app.listen(port, function() {
-  console.log("Server has started successfully!");
+app.listen(process.env.PORT || 3000, function() {
+  console.log("Server is running on port 3000");
 });
