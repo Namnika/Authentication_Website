@@ -120,7 +120,7 @@ app.get('/auth/google',
 );
 
 app.get("/auth/google/secrets",
-  passport.authenticate('google', { failureRedirect: "/login" }),
+  passport.authenticate('google', { scope: ["profile"] }),
   function(req, res) {
     // Successful authentication, redirect to secrets.
     res.redirect('/secrets');
