@@ -67,6 +67,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/auth/google/secrets",
+    userProfileURL: "https://www.googleapi.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ googleId: profile.id, username: profile.emails[0].value },
@@ -111,7 +112,6 @@ passport.use(new GitHubStrategy({
 app.get("/", function(req, res){
   res.render("home");
 });
-
 
 
 // -----GOOGLE AUTHENTICATION-----
