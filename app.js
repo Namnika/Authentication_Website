@@ -70,7 +70,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ googleId: profile.id, username: profile.emails[0].value },
-      (err, user) {
+      function(err, user) {
       return cb(err, user);
     });
   }
