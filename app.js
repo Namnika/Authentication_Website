@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // SET UP SESSION------below code comes from express-session
 app.use(session({
-  secret: "This is little secret.",
+  secret: "This is my little secret.",
   resave: false,
   saveUninitialized: true
 }));
@@ -52,7 +52,7 @@ const User = new mongoose.model("User", userSchema);
 // -----USING PASSPORT TO CREATE LOCAL LOGIN----
 passport.use(User.createStrategy());
 passport.serializeUser(function(user, done){
-  done(null, user.id);
+  done(null, user);
 });
 passport.deserializeUser(function(id, done){
   User.findById(id, function(err, user){
@@ -67,10 +67,9 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/auth/google/secrets",
-    userProfileURL: "https://www.googleapi.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id, username: profile.emails[0].value },
+    User.findOrCreate({ googleId: profile.id, username: profile.displayName},
       function(err, user) {
       return cb(err, user);
     });
@@ -86,7 +85,7 @@ passport.use(new FacebookStrategy({
     enableProof: true
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id },
+    User.findOrCreate({ facebookId: profile.id, username: profile.displayName},
       function (err, user) {
       return cb(err, user);
     });
@@ -102,7 +101,8 @@ passport.use(new GitHubStrategy({
     callbackURL: "http://localhost:3000/auth/github/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    User.findOrCreate({ githubId: profile.id, username: profile.username},
+      function (err, user) {
       return cb(err, user);
     });
   }
